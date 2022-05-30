@@ -1,0 +1,129 @@
+{
+	"name": "closure-namespace-view",
+	"displayName": "Closure Namespace View",
+	"description": "Quick find your Closure namespace",
+	"version": "1.0.1",
+	"publisher": "funte",
+	"engines": {
+		"vscode": "^1.67.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"main": "./out/extension.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/funte/vscode-ClousreNamespaceView.git"
+	},
+	"license": "MIT",
+	"activationEvents": [
+		"onView:namespaceView"
+	],
+	"contributes": {
+		"views": {
+			"explorer": [
+				{
+					"id": "namespaceView",
+					"name": "Closure Namespace View",
+					"visibility": "collapsed"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "scan",
+				"title": "scan Closure namespace",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "jump",
+				"title": "jump to file",
+				"icon": {
+					"light": "resources/light/document.svg",
+					"dark": "resources/dark/document.svg"
+				}
+			},
+			{
+				"command": "copy",
+				"title": "copy the namespace",
+				"icon": {
+					"light": "resources/light/document.svg",
+					"dark": "resources/dark/document.svg"
+				}
+			}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "scan",
+					"when": "view == namespaceView",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "copy",
+					"when": "view == namespaceView && viewItem == NamespaceItem",
+					"group": "inline"
+				},
+				{
+					"command": "jump",
+					"when": "view == namespaceView && viewItem == NamespaceItem",
+					"group": "inline"
+				}
+			]
+		},
+		"configuration": [
+			{
+				"title": "Closure Namespace View",
+				"properties": {
+					"base": {
+						"type": "string",
+						"description": "Path to Closure library base.js file, must be absolute or relative from the workspace root.",
+						"default": "node_modules/google-closure-library/closure/goog/base.js"
+					},
+					"sources": {
+						"type": "array",
+						"uniqueItems": true,
+						"description": "List of absolute patterns, or relative from the workspace root. You can use the negative patterns(start with !) ignore files or directories.",
+						"items": {
+							"type": "string"
+						},
+						"default": [
+							"src/**/*.js"
+						]
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.67.0",
+		"@typescript-eslint/eslint-plugin": "^5.21.0",
+		"@typescript-eslint/parser": "^5.21.0",
+		"@vscode/test-electron": "^2.1.3",
+		"eslint": "^8.14.0",
+		"glob": "^8.0.1",
+		"mocha": "^9.2.2",
+		"typescript": "^4.6.4"
+	},
+	"dependencies": {
+		"google-closure-library-webpack-plugin": "^2.1.2",
+		"slim-pig": "^1.3.7",
+		"webpack": "^5.28.0"
+	}
+}
