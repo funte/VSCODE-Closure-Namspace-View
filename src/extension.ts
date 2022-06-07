@@ -36,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.env.clipboard.writeText(namespace.namespace);
 	});
 	vscode.workspace.onDidChangeTextDocument(e => {
-		viewProvider.refresh();
+		viewProvider.refresh(e.document.uri.fsPath);
 	});
 	vscode.workspace.onDidRenameFiles(e => {
 		viewProvider.refresh();

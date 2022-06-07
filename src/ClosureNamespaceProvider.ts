@@ -33,7 +33,6 @@ export class ClosureNamespaceProvider implements vscode.TreeDataProvider<Namespa
       env: new Environment({ context: this.workspaceRoot }),
       alert: vscode.window.showInformationMessage
     } as any);
-    // this._onDidChangeTreeData.fire();
   }
 
   initClosureTree(base: string, sources: string[]) {
@@ -90,9 +89,9 @@ export class ClosureNamespaceProvider implements vscode.TreeDataProvider<Namespa
     }
   }
 
-  refresh(): void {
+  refresh(files?: string | string[]): void {
     // Scan the whole Closure tree.
-    this.closureTree.scan();
+    this.closureTree.scan(files);
     this._onDidChangeTreeData.fire();
   }
 }
